@@ -1,0 +1,11 @@
+version: '3'
+services:
+  app:
+    build: app
+    volumes:
+      - ./app:/usr/src/app
+      - ./db/FinanceManager.sqlite3:/usr/src/FinanceManager.sqlite3
+    ports:
+      - '5000:5000'
+    environment:
+      GUNICORN_ARGS: '--reload'
