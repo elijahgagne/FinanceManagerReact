@@ -7,24 +7,16 @@ services:
       context: ./app
       dockerfile: Dockerfile
     volumes:
-      - ./app:/usr/src/app
       - ./db/FinanceManager.sqlite3:/usr/src/FinanceManager.sqlite3
-    ports:
-      - 5000:5000
+    expose:
+      - '5000'
     environment:
-      GUNICORN_ARGS: '--reload'
+      GUNICORN_ARGS: '--limit-request-line 65536 --limit-request-field_size 65536'
       DB_FILE: /usr/src/FinanceManager.sqlite3
   web:
     container_name: web
     build:
       context: ./web
-      dockerfile: Dockerfile.develop
-    stdin_open: true
-    tty: true
-    volumes:
-      - ./web:/web
-      - /web/node_modules
+      dockerfile: Dockerfile
     ports:
-      - 8080:3000
-    environment:
-      - CHOKIDAR_USEPOLLING=true
+      - 8080:80
