@@ -10,6 +10,8 @@ TODO
 - DONE: Create a React project
 - DONE: Run a web server with docker-compose
 - DONE: Run a development server with docker-compose
+- Create a welcome page
+- Create a component for displaying upcoming transactions
 
 https://mherman.org/blog/dockerizing-a-react-app/
 https://medium.com/@xiaolishen/develop-in-docker-a-node-backend-and-a-react-front-end-talking-to-each-other-5c522156f634
