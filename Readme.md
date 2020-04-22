@@ -15,12 +15,16 @@ TODO
 
 https://mherman.org/blog/dockerizing-a-react-app/
 https://medium.com/@xiaolishen/develop-in-docker-a-node-backend-and-a-react-front-end-talking-to-each-other-5c522156f634
+https://www.peterbe.com/plog/how-to-create-react-app-with-docker
+https://www.docker.com/blog/keep-nodejs-rockin-in-docker/
+https://blog.bam.tech/developer-news/dockerize-your-app-and-keep-hot-reloading
 
 docker-compose -f docker-compose.prod.yml up --build
 
 docker-compose up --build
 
 http://localhost:8080/
+http://localhost:8080/healthcheck
 http://localhost:8080/api/transactions?next_auto=1
 
 

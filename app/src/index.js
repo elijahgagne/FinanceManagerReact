@@ -4,6 +4,10 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+if(module.hot){
+  module.hot.accept()
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

@@ -1,28 +1,28 @@
 version: '3.7'
 
 services:
-  app:
-    container_name: app
+  api:
+    container_name: api
     build:
-      context: ./app
+      context: ./api
       dockerfile: Dockerfile
     volumes:
-      - ./app:/usr/src/app
+      - ./api:/usr/src/api
       - ./db/FinanceManager.sqlite3:/usr/src/FinanceManager.sqlite3
     ports:
       - 5000:5000
     environment:
       GUNICORN_ARGS: '--reload'
       DB_FILE: /usr/src/FinanceManager.sqlite3
-  web:
-    container_name: web
+  app:
+    container_name: app
     build:
-      context: ./web
+      context: ./app
       dockerfile: Dockerfile.develop
     stdin_open: true
     tty: true
     volumes:
-      - ./web:/usr/share/nginx/html
+      - ./app:/usr/share/nginx/html
       - /usr/share/nginx/html/node_modules
     ports:
       - 8080:80

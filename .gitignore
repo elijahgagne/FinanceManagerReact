@@ -1,15 +1,15 @@
 *.sqlite3
 
 # dependencies
-/web/node_modules
-/web/.pnp
+/app/node_modules
+/app/.pnp
 .pnp.js
 
 # testing
-/web/coverage
+/app/coverage
 
 # production
-/web/build
+/app/build
 
 # misc
 .DS_Store
