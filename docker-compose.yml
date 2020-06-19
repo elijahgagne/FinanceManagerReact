@@ -7,7 +7,7 @@ services:
       context: ./api
       dockerfile: Dockerfile
     volumes:
-      - ./api:/usr/src/api
+      - ./api:/usr/src/app
       - ./db/FinanceManager.sqlite3:/usr/src/FinanceManager.sqlite3
     ports:
       - 5000:5000

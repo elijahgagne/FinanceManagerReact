@@ -2,8 +2,9 @@ import falcon
 import sqlite3
 import json
 import os
+from datetime import datetime, date, timedelta
 
-def execute_query(query, params=[]):
+def execute_query(query, params=[], wrap_array=True):
   conn = sqlite3.connect(os.environ['DB_FILE'])
   conn.row_factory = sqlite3.Row
   db = conn.cursor()
@@ -12,7 +13,10 @@ def execute_query(query, params=[]):
   conn.close()
   data = [dict(i) for i in rows]
   if len(data) == 1:
-    return json.dumps(data[0])
+    if wrap_array:
+      return json.dumps([data[0]])
+    else:
+      return json.dumps(data[0])
   else:
     return json.dumps(data)
 
@@ -24,10 +28,10 @@ class Transactions():
   def on_get(self, req, resp):
     if req.relative_uri == '/api/transactions?next_auto=1':
       resp.status = falcon.HTTP_200
-      resp.body = execute_query("SELECT * FROM transactions WHERE status = 'automatic' AND submit_date < '2020-05-02'")
+      resp.body = execute_query("SELECT * FROM transactions WHERE status = 'automatic' AND submit_date < '" + str(date.today() + timedelta(days=30)) + "'")
     elif req.relative_uri == '/api/transactions?next_manual=1':
       resp.status = falcon.HTTP_200
-      resp.body = execute_query("SELECT * FROM transactions WHERE status = 'manual' AND submit_date < '2020-05-02'")
+      resp.body = execute_query("SELECT * FROM transactions WHERE status = 'manual' AND submit_date < '" + str(date.today() + timedelta(days=30)) + "'")
     elif req.relative_uri == '/api/transactions?pending=1':
       resp.status = falcon.HTTP_200
       resp.body = execute_query("SELECT * FROM transactions WHERE status = 'pending'")
@@ -52,7 +56,7 @@ class Transactions():
 
 class OneTransaction():
   def on_get(self, req, resp, id):
-    result = execute_query("SELECT * FROM transactions WHERE id = ?", [id])
+    result = execute_query("SELECT * FROM transactions WHERE id = ?", [id], False)
     if result == '[]':
       raise falcon.HTTPNotFound()
     else:
@@ -65,7 +69,7 @@ class OneTransaction():
     try:
       params = [data['name'], data['payment_method'], data['amount'], data['submit_date'], data['status'], id]
       execute_query(sql, params)
-      result = execute_query("SELECT * FROM transactions WHERE id = ?", [id])
+      result = execute_query("SELECT * FROM transactions WHERE id = ?", [id], False)
       if result == '[]':
         raise falcon.BadRequest()
       else:
@@ -75,7 +79,7 @@ class OneTransaction():
       raise falcon.HTTPBadRequest()
 
   def on_delete(self, req, resp, id):
-    result = execute_query("SELECT * FROM transactions WHERE id = ?", [id])
+    result = execute_query("SELECT * FROM transactions WHERE id = ?", [id], False)
     if result == '[]':
       raise falcon.HTTPNotFound()
     else:
