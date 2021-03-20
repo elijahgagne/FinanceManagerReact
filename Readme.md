@@ -12,8 +12,9 @@ TODO
 - DONE: Run a development server with docker-compose
 - DONE: Create a welcome page
 - DONE: Add ability to always get arrays from JSON payload
-- Create a component for displaying transactions
-
+- DONE: Create a component for displaying current transactions
+- Create a component for displaying all transactions
+- Create a component for creating a new transactions
 
 
 https://mherman.org/blog/dockerizing-a-react-app/
